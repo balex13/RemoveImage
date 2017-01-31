@@ -27,7 +27,6 @@ class CatalogProduct
         $searchResults = $this->productRepository->getList($searchCriteria);
         if ($searchResults->getTotalCount() > 0) {
             foreach ($searchResults->getItems() as $item) {
-//                $media = $item->getMediaGalleryEntries();
                 $media = $this->mediaGalleryManagement->getList($item->getSku());
                 if (count($media) > 0) {
                     foreach ($media as $mediaItem) {
@@ -36,7 +35,7 @@ class CatalogProduct
                 }
                 $output->write(".");
             }
+            $output->write(PHP_EOL);
         }
-
     }
 }

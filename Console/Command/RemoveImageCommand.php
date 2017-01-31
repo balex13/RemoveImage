@@ -13,9 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RemoveImageCommand extends Command
 {
     private $catalogProduct;
+    private $appState;
 
-    public function __construct(\Magento\RemoveImage\Model\CatalogProduct $catalogProduct)
-    {
+    public function __construct(
+        \Magento\Framework\App\State $appState,
+        \Magento\RemoveImage\Model\CatalogProduct $catalogProduct
+    ) {
+        $this->appState = $appState;
         $this->catalogProduct = $catalogProduct;
         parent::__construct();
     }
@@ -37,6 +41,7 @@ class RemoveImageCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->appState->setAreaCode(\Magento\Framework\App\Area::AREA_GLOBAL);
         $this->catalogProduct->RemoveImage($output);
         $output->writeln('<info>' . 'Images removed.' . '</info>');
     }
